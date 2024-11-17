@@ -30,17 +30,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Deploy to Azure
         run: |
-        # Create resource group rg-copilot-nodejs-todo
-        az group create --name rg-copilot-nodejs-todo --location eastus
-        # Deploy the app to Azure App Service
-        az webapp up --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --sku B1 --location eastus --os-type Linux --runtime "NODE|20-lts"
-        # Create database todos with collection tasks
-        az cosmosdb sql database create --account-name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --name todos
-        az cosmosdb sql container create --account-name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --database-name todos --name tasks --partition-key-path /id --throughput 400
-        az webapp up --sku F1 --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --runtime "node|20-lts"
-```     # Retrieve cosmos endpoint
-        cosmos_endpoint=$(az cosmosdb show --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --query "documentEndpoint" --output tsv)
-        # Retrieve cosmos key
-        cosmos_key=$(az cosmosdb keys list --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --query "primaryMasterKey" --output tsv)
-        # Update the app settings with cosmos endpoint and key
-        az webapp config appsettings set --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --settings "COSMOS_URI=$cosmos_endpoint" "COSMOS_KEY=$cosmos_key" --output none
+        cosmos_endpoint=$(az cosmosdb show --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --query documentEndpoint --output tsv)
+        cosmos_key=$(az cosmosdb keys list --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --query primaryMasterKey --output tsv)
+        az webapp up --sku F1 --name copilot-nodejs-todo-amanrao --resource-group rg-copilot-nodejs-todo --runtime "node|20-lts"
+        az webapp config appsettings set --name nodejs-todo-amanrao --resource-group rg-copilot-nodejs-todo --settings COSMOS_URI=$cosmos_endpoint COSMOS_KEY=$cosmos_key --output none
