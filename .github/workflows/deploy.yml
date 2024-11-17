@@ -30,7 +30,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Deploy to Azure
         run: |
-        cosmos_endpoint=$(az cosmosdb show --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --query documentEndpoint --output tsv)
-        cosmos_key=$(az cosmosdb keys list --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --query primaryMasterKey --output tsv)
-        az webapp up --sku F1 --name copilot-nodejs-todo-amanrao --resource-group rg-copilot-nodejs-todo --runtime "node|20-lts"
-        az webapp config appsettings set --name nodejs-todo-amanrao --resource-group rg-copilot-nodejs-todo --settings COSMOS_URI=$cosmos_endpoint COSMOS_KEY=$cosmos_key --output none
+          cosmos_endpoint=$(az cosmosdb show --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --query documentEndpoint --output tsv)
+          cosmos_key=$(az cosmosdb keys list --name copilot-nodejs-todo --resource-group rg-copilot-nodejs-todo --query primaryMasterKey --output tsv)
+          az webapp up --sku F1 --name copilot-nodejs-todo-amanrao --resource-group rg-copilot-nodejs-todo --runtime "node|20-lts"
+          az webapp config appsettings set --name nodejs-todo-amanrao --resource-group rg-copilot-nodejs-todo --settings COSMOS_URI=$cosmos_endpoint COSMOS_KEY=$cosmos_key --output none
